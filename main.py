@@ -7,7 +7,9 @@ knowledge_base = [
 ]
 
 def retrieve_information(question):
-    question_words = set(question.lower().split())
+    question_words = set(
+        question.lower().replace("?", "").split()
+    )
 
     results = []
 
@@ -21,12 +23,10 @@ def retrieve_information(question):
         if score > 0:
             results.append((score, document))
 
-    results.sort(reverse=True)
-
+    results.sort(key=lambda item: item[0], reverse=True)
     return results
 
 question = input("Ask a question: ")
-
 results = retrieve_information(question)
 
 print("\nRetrieved information:")
